@@ -9,3 +9,4 @@
 - `man cc`
     
     - `-W`:means warning `-Wall` means display 'all warning', not the 'wall'
+
