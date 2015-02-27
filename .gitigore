@@ -1,4 +1,4 @@
-exercises/*
+./exercises/*
 
 !exercises/*.c
 !exercises/Makefile
