@@ -55,9 +55,9 @@ struct Connection *Database_open(const char *filename, char mode)
     if(!conn->db) die("Memory error");
 
     if(mode == 'c') {
-        conn->file = fopen(filename, 'w');
+        conn->file = fopen(filename, "w");
     } else {
-        conn->file = fopen(filename, 'r+');
+        conn->file = fopen(filename, "r+");
         if(conn->file) {
             Database_load(conn);
         }
@@ -84,7 +84,7 @@ void Database_write(struct Connection *conn)
     if(rc != 1) die("Failed to write database.");
 
     rc = fflush(conn->file);
-    if(rc == -1) die("Cannot flush database")
+    if(rc == -1) die("Cannot flush database");
 
 }
 
