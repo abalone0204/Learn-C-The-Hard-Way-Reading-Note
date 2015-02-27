@@ -36,7 +36,7 @@ void die(const char *message)
 
 void Address_print(struct Address *addr)
 {
-    printf("%d %s %s\n", 
+    printf("%2d %s %s\n", 
         addr->id, addr->name, addr->email);
 }
 
@@ -191,7 +191,6 @@ int main(int argc, char *argv[]){
         case 'l':
             Database_list(conn);
             break;
-
         default:
             die("Invalid action, only: c=create, g=get, d=del, s=set, l=list");
     }
