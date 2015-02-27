@@ -1,4 +1,4 @@
-# 使用規則
+# Rules for reading this book
 
 - Type in all of the code. Do not copy-paste!
 
