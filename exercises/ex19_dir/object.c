@@ -50,7 +50,7 @@ void *Object_new(size_t size, Object proto, char *description)
     //  then point a different pointer at it to "cast" it
 
     Object *el = calloc(1, size);
-
+    *el = proto;
     // copy the description over
     el->description = strdup(description);
 
