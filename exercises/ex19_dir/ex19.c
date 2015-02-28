@@ -33,7 +33,7 @@ int Monster_init(void *self)
 
 Object MonsterProto = {
     .init = Monster_init,
-    .attack = Monster_attack;
+    .attack = Monster_attack
 };
 
 void *Room_move(void *self, Direction direction)
@@ -57,6 +57,10 @@ void *Room_move(void *self, Direction direction)
         printf("You can't go that direction.");
         next = NULL;
     }
+    if(next) {
+        next->_(describe)(next);
+    }
+
     return next;
 }
 
@@ -69,14 +73,14 @@ int Room_attack(void *self, int damage)
         monster->_(attack)(monster, damage);
         return 1;
     } else {
-        printf("You flail in the air at nothing. Idiot!\n", );
+        printf("You flail in the air at nothing. Idiot!\n");
         return 0;
     }
 }
 
 Object RoomProto = {
     .move = Room_move,
-    .attack = Room_attack;
+    .attack = Room_attack
 };
 
 void *Map_move(void *self, Direction direction)
@@ -109,12 +113,34 @@ int Map_init(void *self)
     // Remember NEW, the macro we define in object.h?
     Room *hall = NEW(Room, "The great Hall");
     Room *throne = NEW(Room, "The throne room");
-    Room arena = NEW(Room, )
+    Room *arena = NEW(Room, "The arena");
+    Room *kitchen = NEW(Room, "Kitchen, you have the knife now");
+
+    // put the bad guy in the arena
+    arena->bad_guy = NEW(Monster, "The evil minotaur");
+
+    // setup the map rooms
+
+    hall->north = throne;
+
+    throne->west = arena;
+    throne->east = kitchen;
+    throne->south = hall;
+
+    arena->east = throne;
+    kitchen->west = throne;
+
+    // Start the map and the character off in the hall
+    map->start = hall;
+    map->location = hall;
+    return 1;
+
 }
+
 Object MapProto = {
     .init = Map_init,
     .attack = Map_attack,
-    .move = Map_move;
+    .move = Map_move
 };
 
 int process_input(Map *game)
@@ -122,6 +148,7 @@ int process_input(Map *game)
     printf("\n> ");
 
     char ch = getchar();
+    getchar(); // Eat ENTER
 
     int damage = rand() % 4;
 
@@ -166,7 +193,11 @@ int main(int argc, char *argv[]){
     // make our map to work with
     Map *game = NEW(Map, "The Hall of the Minotaur.");
 
-    printf("You enter the \n");
+    printf("You enter the ");
     game->location->_(describe)(game->location);
+
+    while(process_input(game)){
+
+    }
     return 0;
 }
